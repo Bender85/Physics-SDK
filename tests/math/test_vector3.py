@@ -35,3 +35,70 @@ def test_copy_is_independent():
     copied = original.copy()
     copied.x = 100
     assert original.x == 1
+
+def test_dot_parallel_vectors():
+    a = Vector3(1, 0, 0)
+    b = Vector3(2, 0, 0)
+
+    assert a.dot(b) == 2
+
+def test_dot_perpendicular_vectors():
+    a = Vector3(1, 0, 0)
+    b = Vector3(0, 1, 0)
+
+    assert a.dot(b) == 0
+
+def test_dot_opposite_vectors():
+    a = Vector3(1, 0, 0)
+    b = Vector3(-1, 0, 0)
+
+    assert a.dot(b) == -1
+
+def test_dot_with_zero_vector():
+    a = Vector3(1, 2, 3)
+    b = Vector3(0, 0, 0)
+
+    assert a.dot(b) == 0
+
+def test_dot_is_commutative():
+    a = Vector3(1, 2, 3)
+    b = Vector3(4, 5, 6)
+
+    assert a.dot(b) == b.dot(a)
+
+def test_dot_with_large_values():
+    a = Vector3(1e6, 2e6, 3e6)
+    b = Vector3(4, 5, 6)
+
+    result = a.dot(b)
+
+    assert isinstance(result, float)
+
+def test_cross_xy_is_z():
+    a = Vector3(1, 0, 0)
+    b = Vector3(0, 1, 0)
+    r = a.cross(b)
+    assert r == Vector3(0, 0, 1)
+
+def test_cross_is_anti_commutative():
+    a = Vector3(1, 2, 3)
+    b = Vector3(4, 5, 6)
+
+    assert a.cross(b) == -b.cross(a)
+
+def test_cross_parallel_vectors_is_zero():
+    a = Vector3(2, 2, 2)
+    b = Vector3(4, 4, 4)
+
+    r = a.cross(b)
+
+    assert r.is_zero()
+
+def test_cross_result_is_orthogonal():
+    a = Vector3(1, 0, 0)
+    b = Vector3(0, 1, 0)
+
+    r = a.cross(b)
+
+    assert r.dot(a) == 0
+    assert r.dot(b) == 0
