@@ -90,6 +90,23 @@ class Vector3:
             self.y * inv_length,
             self.z * inv_length
         )
+    
+    # -------------------------
+    # ANGLE
+    # -------------------------
+    def angle_to(self, other: "Vector3") -> float:
+        if not isinstance(other, Vector3):
+            return NotImplemented
+
+        dot = self.dot(other)
+        denom = self.length() * other.length()
+
+        if denom == 0:
+            raise ValueError("Cannot compute angle with zero-length vector")
+
+        cos_theta = max(-1.0, min(1.0, dot / denom))
+
+        return math.acos(cos_theta)
 
     # -------------------------
     # PYTHON OPERATORS (NEW)

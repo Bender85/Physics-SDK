@@ -1,5 +1,6 @@
 from physics_sdk.math.vector3 import Vector3
 import pytest
+import math
 
 
 def test_zero_vector_has_all_zero_components():
@@ -124,3 +125,36 @@ def test_normalize_preserves_direction():
     n = v.normalize()
 
     assert n == Vector3(1, 0, 0)
+
+# -------------------------
+# Перпендикулярні (90°)
+# -------------------------
+def test_angle_between_perpendicular_vectors():
+    a = Vector3(1, 0, 0)
+    b = Vector3(0, 1, 0)
+
+    angle = a.angle_to(b)
+
+    assert pytest.approx(angle, abs=1e-6) == math.pi / 2
+
+# -------------------------
+# Однакові (0°)
+# -------------------------
+def test_angle_between_same_vectors():
+    a = Vector3(1, 0, 0)
+    b = Vector3(2, 0, 0)
+
+    angle = a.angle_to(b)
+
+    assert pytest.approx(angle, abs=1e-6) == 0
+
+# -------------------------
+# Протилежні (180°)
+# -------------------------
+def test_angle_between_opposite_vectors():
+    a = Vector3(1, 0, 0)
+    b = Vector3(-1, 0, 0)
+
+    angle = a.angle_to(b)
+
+    assert pytest.approx(angle, abs=1e-6) == math.pi
