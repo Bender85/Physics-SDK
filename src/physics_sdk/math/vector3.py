@@ -6,6 +6,15 @@ EPSILON = 1e-9
 
 @dataclass(slots=True)
 class Vector3:
+
+    @classmethod
+    def zero(cls) -> "Vector3":
+        return cls(0.0, 0.0, 0.0)
+
+    @classmethod
+    def one(cls) -> "Vector3":
+        return cls(1.0, 1.0, 1.0)
+    
     """
     Represents a 3D vector with x, y, and z components.
     """
@@ -56,6 +65,21 @@ class Vector3:
             dx * dx +
             dy * dy +
             dz * dz
+        )
+    
+    def dot(self, other: "Vector3") -> float:
+        """
+        Return the dot product of this vector and another.
+        """
+
+        if not isinstance(other, Vector3):
+            return NotImplemented
+
+        return (
+            self.x * other.x +
+            self.y * other.y +
+            self.z * other.z
+
         )
     
 
@@ -132,6 +156,8 @@ def __eq__(self, other: object) -> bool:
     )
     
 
-v = Vector3(4, 2, 1)
-print(v.length())  # Output: 5.0
-print(v.squared_length())  # Output: 21.0
+a = Vector3(1, 0, 0)
+
+b = Vector3(0, 1, 0)
+
+print(a.dot(b))
