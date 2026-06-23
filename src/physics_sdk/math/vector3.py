@@ -73,6 +73,23 @@ class Vector3:
             self.z * other.x - self.x * other.z,
             self.x * other.y - self.y * other.x
         )
+    
+    # -------------------------
+    # NORMALIZATION
+    # -------------------------
+    def normalize(self) -> "Vector3":
+        length = self.length()
+
+        if length == 0:
+            raise ValueError("Cannot normalize a zero-length vector")
+
+        inv_length = 1.0 / length
+
+        return Vector3(
+            self.x * inv_length,
+            self.y * inv_length,
+            self.z * inv_length
+        )
 
     # -------------------------
     # PYTHON OPERATORS (NEW)

@@ -1,4 +1,5 @@
 from physics_sdk.math.vector3 import Vector3
+import pytest
 
 
 def test_zero_vector_has_all_zero_components():
@@ -102,3 +103,24 @@ def test_cross_result_is_orthogonal():
 
     assert r.dot(a) == 0
     assert r.dot(b) == 0
+
+def test_normalize_zero_vector_raises():
+    v = Vector3.zero()
+    with pytest.raises(ValueError):
+        v.normalize()
+
+def test_normalize_has_unit_length():
+
+    v = Vector3(3, 4, 0)
+
+    n = v.normalize()
+
+    assert pytest.approx(n.length()) == 1.0
+
+def test_normalize_preserves_direction():
+
+    v = Vector3(10, 0, 0)
+
+    n = v.normalize()
+
+    assert n == Vector3(1, 0, 0)
